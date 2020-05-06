@@ -1,98 +1,43 @@
-Package scss.nest;
+Package scss.generator;
 
 Helpers
-    all = [0 .. 0xFFFF];
-    letter = ['a'..'z'] | ['A'..'Z'];
-    digit = ['0'..'9'];
 
-    string_char = [[' '..'~'] - '"'] | '"' '"';
+  letter = ['a'..'z'] | ['A'..'Z'];
+  digit = ['0'..'9'];
 
-    cr = 13;
-    lf = 10;
-    tab = 9;
-    eol = cr lf | cr | lf;
-    not_cr_lf = [all - [cr + lf]];
-    not_star = [all - '*'];
-    not_star_slash =  [not_star - '/'];
-    short_comment = '//' not_cr_lf* eol;
-    long_comment = '/*' not_star* '*'+ (not_star_slash not_star* '*'+)* '/';
-    comment = short_comment | long_comment;
+  string_char = [[' '..'~'] - '"'] | '"' '"';
+
+  unit            = '%'|'px'|'cm'|'mm'|'in'|'pt'|'pc'|'em'|'ex'|'deg'|'rad'|'grad'|'ms'|'s'|'hz'|'khz';
+
+  cr = 13;
+  lf = 10;
+  tab = 9;
 
 Tokens
-    null            = 'null';
-    in              = 'in';
-    default         = '!default';
-    unit            = '%'|'px'|'cm'|'mm'|'in'|'pt'|'pc'|'em'|'ex'|'deg'|'rad'|'grad'|'ms'|'s'|'hz'|'khz';
+  // separators
 
-    combine_compare = '&&' | '||';
-    ellipsis        = '...';
+  colon = ':';
+  l_brace = '{';
+  r_brace = '}';
+  semicolon = ';';
 
-    lparen          = '(';
-    rparen          = ')';
-    blockstart      = '{';
-    blockend        = '}';
-    lbrack          = '[';
-    rbrack          = ']';
-    gt              = '>';
-    til             = '~';
-    lt              = '<';
-    colon           = ':';
-    semi            = ';';
-    comma           = ',';
-    dot             = '.';
-    dollar          = '$';
-    at              = '@';
-    and             = '&';
-    hash            = '#';
-    coloncolon      = '::';
-    plus            = '+';
-    star            = '**';
-    times           = '*';
-    div             = '/';
-    minus           = '-';
-    perc            = '%';
 
-    eqeq            = '==';
-    noteq           = '!=';
-    eq              = '=';
-    pipe_eq         = '|=';
-    tild_eq         = '~=';
+  identifier = ( letter | digit | '#' | 'dot' | '$' | '-')+;
 
-    mixin           = '@mixin';
-    function        = '@function';
-    at_else         = '@else';
-    if              = 'if';
-    at_if           = '@if';
-    at_for          = '@for';
-    at_while        = '@while';
-    at_each         = '@each';
-    include         = '@include';
-    import          = '@import';
-    return          = '@return';
-    from            = 'from';
-    through         = 'through';
-    pound_default   = '!default';
-
-    identifier      = ('_' | letter | digit) ('-' | '_' | letter | digit)* ;
-    string_literal  = '"' string_char* '"';
-    number_literal  = '-' ( digit* '.' )? digit+ | ( digit* '.' )? digit+ ;
-    color           = '#' ( digit | ['a'..'f'] | ['A'..'F'] )+;
-    url             = 'url' '{' string_char* '}';
-    blank = (' ' | cr | lf | tab)+;
-    comment         = comment;
-
-    string_chars = string_char*;
+  blank = (' ' | cr | lf | tab)+;
 
 Ignored Tokens
-    blank, comment;
+  blank;
 
 Productions
-    stylesheet =
-        statement*;
+  stylesheet =
+    ruleset*;
 
-    nested =
+  ruleset =
+    {rule} identifier block |
+    {property} [first]:identifier colon [second]:identifier* semicolon ;
+
+  block =
+    l_brace ruleset* r_brace ;
 
 
-    statement =
-        {simple} string_chars semi |
-        {nested} string_chars blockstart statement* blockend;

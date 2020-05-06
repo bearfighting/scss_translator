@@ -1,0 +1,96 @@
+Package scss.calculation;
+
+Helpers
+
+  letter = ['a'..'z'] | ['A'..'Z'];
+  digit = ['0'..'9'];
+
+  string_char = [[' '..'~'] - '"'] | '"' '"';
+
+  cr = 13;
+  lf = 10;
+  tab = 9;
+
+Tokens
+
+  // prefix
+  dollar = '$';
+
+  // Separators
+
+  l_brace = '{';
+  r_brace = '}';
+
+  l_par = '(';
+  r_par = ')';
+
+  comma = ',';
+  semicolon = ';';
+
+  // Operators
+
+  assign = '=';
+  colon  = ':';
+
+  and = '&&';
+  or = '||';
+
+  eq = '==';
+  neq = '!=';
+  lt = '<';
+  lteq = '<=';
+  gt = '>';
+  gteq = '>=';
+
+  add = '+';
+  sub = '-';
+  mul = '*';
+  div = '/';
+  mod = '%';
+  not = '!';
+
+  // Keywords
+
+  if = 'if';
+  else = 'else';
+  while = 'while';
+  print = 'print';
+  boolean = 'boolean';
+  string = 'string';
+  integer = 'integer';
+  true = 'true';
+  false = 'false';
+
+  // Conversions
+
+  b2s = '$b2s'; // boolean to string
+  i2s = '$i2s'; // integer to string
+
+  // Identifiers and literals
+
+  identifier = letter (letter | digit | '-' | '_')*;
+
+  string_literal = '"' string_char* '"';
+
+  integer_literal = digit+;
+
+  // Blank
+
+  blank = (' ' | cr | lf | tab)+;
+
+Ignored Tokens
+  blank;
+
+Productions
+
+  stylesheet =
+    statement*;
+
+  statement =
+    {assigment} variable colon identifier comma_identifier* ;
+
+  comma_identifier =
+    comma identifier ;
+
+  variable =
+    dollar identifier ;

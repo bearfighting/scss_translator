@@ -24,10 +24,11 @@ Tokens
     in              = 'in';
     default         = '!default';
     unit            = '%'|'px'|'cm'|'mm'|'in'|'pt'|'pc'|'em'|'ex'|'deg'|'rad'|'grad'|'ms'|'s'|'hz'|'khz';
-
+    variable        = '@' identifier ;
 //    combine_compare = '&&' | '||';
     ellipsis        = '...';
 
+    string_literal  = string_char* ;
     lparen          = '(';
     rparen          = ')';
     blockstart      = '{';
@@ -76,11 +77,10 @@ Tokens
     through         = 'through';
     pound_default   = '!default';
 
-    variable        = '@' identifier ;
+
     identifier      = identifier ;
-    string_literal  = '"' string_char* '"';
+
     number_literal  = '-' ( digit* '.' )? digit+ | ( digit* '.' )? digit+ ;
-    color           = '#' ( digit | ['a'..'f'] | ['A'..'F'] )+;
     url             = 'url' '{' string_char* '}';
     blank = (' ' | cr | lf | tab)+;
     comment         = comment;
@@ -235,7 +235,7 @@ Productions
     expression =
         {number} number_literal |
         {number_unit} number_literal unit |
-        {color} color |
+        {color}  |
         {string} string_literal |
         {null} null |
         {url} url |

@@ -1,0 +1,164 @@
+Package scss;
+
+Helpers
+
+  letter = ['a'..'z'] | ['A'..'Z'];
+  digit = ['0'..'9'];
+
+  string_char = [[' '..'~'] - '"'] | '"' '"';
+  unit            = '%'|'px'|'cm'|'mm'|'in'|'pt'|'pc'|'em'|'ex'|'deg'|'rad'|'grad'|'ms'|'s'|'hz'|'khz';
+
+  cr = 13;
+  lf = 10;
+  tab = 9;
+
+Tokens
+
+  // Separators
+
+  l_brace = '{';
+  r_brace = '}';
+
+  l_par = '(';
+  r_par = ')';
+
+  comma = ',';
+  hash = '#';
+  semicolon = ';';
+  colon = ':';
+  dot = '.';
+
+
+  // Operators
+
+  dollar = '$';
+  assign = '=';
+
+  and = '&&';
+  or = '||';
+
+  eq = '==';
+  neq = '!=';
+  lt = '<';
+  lteq = '<=';
+  gt = '>';
+  gteq = '>=';
+
+  add = '+';
+  sub = '-';
+  mul = '*';
+  div = '/';
+  mod = '%';
+  not = '!';
+
+  // Keywords
+
+  if = 'if';
+  else = 'else';
+  while = 'while';
+  print = 'print';
+  boolean = 'boolean';
+  string = 'string';
+  integer = 'integer';
+  true = 'true';
+  false = 'false';
+
+  // Identifiers and literals
+
+
+  integer_literal = digit+ unit | digit+ ;
+
+  identifier = letter (letter | digit | '-' | '_')*;
+
+  string_literal = '"' string_char* '"';
+
+
+
+  // Blank
+
+  blank = (' ' | cr | lf | tab)+;
+
+Ignored Tokens
+  blank;
+
+Productions
+
+  program =
+    statement*;
+
+  statement =
+    {assignment} dollar identifier colon expression comma_expression* semicolon |
+    {property} identifier colon [first]:attribute [rest]:attribute* semicolon |
+    {ruleset} selectors block |
+    {if} if l_par expression r_par block |
+    {if_else} if l_par expression r_par [then_block]: block else [else_block]:block |
+    {while} while l_par expression r_par block |
+    {print} print l_par expression r_par semicolon;
+
+  comma_expression =
+    comma expression ;
+
+  selectors =
+    [first]:selector [rest]:selector*  ;
+
+  selector =
+    {simple} identifier |
+    {dot} dot identifier |
+    {hash} hash identifier |
+    {star} mul ;
+
+  attribute =
+    {simple} identifier |
+    {number} integer_literal |
+    {color} hash integer_literal |
+    {variable} dollar identifier ;
+
+  block =
+    l_brace [statements]:statement* r_brace;
+
+  type =
+    {boolean} boolean |
+    {string} string |
+    {integer} integer;
+
+  expression =
+    {and} [left]:expression and [right]:bool_exp |
+    {simple} [expression]:bool_exp;
+
+  bool_exp =
+    {or} [left]:bool_exp or [right]:comparison |
+    {simple} [expression]:comparison;
+
+  comparison =
+    {eq} [left]:comparison eq [right]:arith |
+    {neq} [left]:comparison neq [right]:arith |
+    {lt} [left]:comparison lt [right]:arith |
+    {lteq} [left]:comparison lteq [right]:arith |
+    {gt} [left]:comparison gt [right]:arith |
+    {gteq} [left]:comparison gteq [right]:arith |
+    {simple} [expression]:arith;
+
+  arith =
+    {add} [left]:arith add [right]:factor |
+    {sub} [left]:arith sub [right]:factor |
+    {simple} [expression]:factor;
+
+  factor =
+    {mul} [left]:factor mul [right]:unary |
+    {div} [left]:factor div [right]:unary |
+    {mod} [left]:factor mod [right]:unary |
+    {simple} [expression]:unary;
+
+  unary =
+    {not} not [expression]:unary |
+    {color} hash [expression]:unary |
+    {variable} dollar [expression]:unary |
+    {simple} [expression]:term;
+
+  term =
+    {variable} identifier |
+    {true} true |
+    {false} false |
+    {string_literal} string_literal |
+    {integer_literal} integer_literal |
+    {par} l_par expression r_par;

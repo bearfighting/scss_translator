@@ -1,20 +1,20 @@
 import cssGenerator.CodeGenerator;
-import scss.generator.lexer.Lexer;
-import scss.generator.lexer.LexerException;
-import scss.generator.node.Node;
-import scss.generator.parser.Parser;
-import scss.generator.parser.ParserException;
+import scss.calculation.lexer.Lexer;
+import scss.calculation.lexer.LexerException;
+import scss.calculation.node.Node;
+import scss.calculation.parser.Parser;
+import scss.calculation.parser.ParserException;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PushbackReader;
 
-public class Main {
+public class Main1 {
 
     public static final String INPUT_SUFFIX = ".scss";
 
-    public static final String OUTPUT_SUFFIX = ".css";
+    public static final String OUTPUT_SUFFIX = "._css";
 
     public static void main(String[] args) {
 
