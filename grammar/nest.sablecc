@@ -22,7 +22,7 @@ Tokens
   semicolon = ';';
 
 
-  identifier = ( letter | digit | '#' | 'dot' | '$' | '-')+;
+  identifier = ( letter | digit | '#' | '.' | '$' | '-' | '%' | '(' | ')')+;
 
   blank = (' ' | cr | lf | tab)+;
 

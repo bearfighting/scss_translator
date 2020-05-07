@@ -87,19 +87,139 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseACommaIdentifier(ACommaIdentifier node)
+    public void caseAMixinStatement(AMixinStatement node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseAVariable(AVariable node)
+    public void caseAIncludeStatement(AIncludeStatement node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseARulesetStatement(ARulesetStatement node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAStatementBlock(AStatementBlock node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACallFunctionCall(ACallFunctionCall node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASimpleFunctionCall(ASimpleFunctionCall node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseACommaCommaValue(ACommaCommaValue node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASimpleCommaValue(ASimpleCommaValue node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADollarVariable(ADollarVariable node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseADotVariable(ADotVariable node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASimpleVariable(ASimpleVariable node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAPercUnit(APercUnit node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseASimpleUnit(ASimpleUnit node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAStringValue(AStringValue node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATermValue(ATermValue node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseATrueTerm(ATrueTerm node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAColorTerm(AColorTerm node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseANumberTerm(ANumberTerm node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseAFalseTerm(AFalseTerm node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseANullTerm(ANullTerm node)
     {
         defaultCase(node);
     }
 
     @Override
     public void caseTDollar(TDollar node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTHash(THash node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTDot(TDot node)
     {
         defaultCase(node);
     }
@@ -237,43 +357,13 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTIf(TIf node)
+    public void caseTMixin(TMixin node)
     {
         defaultCase(node);
     }
 
     @Override
-    public void caseTElse(TElse node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTWhile(TWhile node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTPrint(TPrint node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTBoolean(TBoolean node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTString(TString node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTInteger(TInteger node)
+    public void caseTInclude(TInclude node)
     {
         defaultCase(node);
     }
@@ -291,19 +381,19 @@ public class AnalysisAdapter implements Analysis
     }
 
     @Override
-    public void caseTB2s(TB2s node)
-    {
-        defaultCase(node);
-    }
-
-    @Override
-    public void caseTI2s(TI2s node)
+    public void caseTNull(TNull node)
     {
         defaultCase(node);
     }
 
     @Override
     public void caseTIdentifier(TIdentifier node)
+    {
+        defaultCase(node);
+    }
+
+    @Override
+    public void caseTColor(TColor node)
     {
         defaultCase(node);
     }

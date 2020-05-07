@@ -1,4 +1,4 @@
-import cssGenerator.CodeGenerator;
+import cssCalculator.Calculator;
 import scss.calculation.lexer.Lexer;
 import scss.calculation.lexer.LexerException;
 import scss.calculation.node.Node;
@@ -56,23 +56,14 @@ public class Main1 {
             // Construct tree
             Node tree = parser.parse();
 
-            // Semantic verifications: Verify and collect expression types
-//            ExpressionTypeCollector expressionTypeCollector
-//                    = new ExpressionTypeCollector();
-//            expressionTypeCollector.analyze(tree);
-
             // Code generation: generate tinylang with explicit type conversions
-            CodeGenerator codeGenerator = new CodeGenerator();
-            codeGenerator.generate(outputFilename, tree);
+            Calculator calculator = new Calculator();
+            calculator.calculate(outputFilename, tree);
         }
         catch (FileNotFoundException e) {
             System.err.println("FILE NOT FOUND ERROR: " + e.getMessage() + ".");
             System.exit(1);
         }
-//        catch (SemanticException e) {
-//            System.err.println("SEMANTIC ERROR: " + e.getMessage() + ".");
-//            System.exit(1);
-//        }
         catch (ParserException e) {
             System.err.println("SYNTAX ERROR: " + e.getMessage() + ".");
             System.exit(1);

@@ -12,7 +12,7 @@ import java.io.PushbackReader;
 
 public class Main {
 
-    public static final String INPUT_SUFFIX = ".scss";
+    public static final String INPUT_SUFFIX = "._css";
 
     public static final String OUTPUT_SUFFIX = ".css";
 

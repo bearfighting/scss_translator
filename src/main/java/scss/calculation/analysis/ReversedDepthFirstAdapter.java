@@ -75,76 +75,558 @@ public class ReversedDepthFirstAdapter extends AnalysisAdapter
     public void caseAAssigmentStatement(AAssigmentStatement node)
     {
         inAAssigmentStatement(node);
+        if(node.getSemicolon() != null)
         {
-            List<PCommaIdentifier> copy = new ArrayList<PCommaIdentifier>(node.getCommaIdentifier());
+            node.getSemicolon().apply(this);
+        }
+        {
+            List<PCommaValue> copy = new ArrayList<PCommaValue>(node.getRest());
             Collections.reverse(copy);
-            for(PCommaIdentifier e : copy)
+            for(PCommaValue e : copy)
             {
                 e.apply(this);
             }
         }
-        if(node.getIdentifier() != null)
+        if(node.getSecond() != null)
         {
-            node.getIdentifier().apply(this);
+            node.getSecond().apply(this);
         }
         if(node.getColon() != null)
         {
             node.getColon().apply(this);
         }
-        if(node.getVariable() != null)
+        if(node.getFirst() != null)
         {
-            node.getVariable().apply(this);
+            node.getFirst().apply(this);
         }
         outAAssigmentStatement(node);
     }
 
-    public void inACommaIdentifier(ACommaIdentifier node)
+    public void inAMixinStatement(AMixinStatement node)
     {
         defaultIn(node);
     }
 
-    public void outACommaIdentifier(ACommaIdentifier node)
+    public void outAMixinStatement(AMixinStatement node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseACommaIdentifier(ACommaIdentifier node)
+    public void caseAMixinStatement(AMixinStatement node)
     {
-        inACommaIdentifier(node);
+        inAMixinStatement(node);
+        if(node.getBlock() != null)
+        {
+            node.getBlock().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        {
+            List<PCommaValue> copy = new ArrayList<PCommaValue>(node.getSecond());
+            Collections.reverse(copy);
+            for(PCommaValue e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getFirst() != null)
+        {
+            node.getFirst().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
         if(node.getIdentifier() != null)
         {
             node.getIdentifier().apply(this);
+        }
+        if(node.getMixin() != null)
+        {
+            node.getMixin().apply(this);
+        }
+        outAMixinStatement(node);
+    }
+
+    public void inAIncludeStatement(AIncludeStatement node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAIncludeStatement(AIncludeStatement node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAIncludeStatement(AIncludeStatement node)
+    {
+        inAIncludeStatement(node);
+        if(node.getSemicolon() != null)
+        {
+            node.getSemicolon().apply(this);
+        }
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        {
+            List<PFunctionCall> copy = new ArrayList<PFunctionCall>(node.getRest());
+            Collections.reverse(copy);
+            for(PFunctionCall e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getFirst() != null)
+        {
+            node.getFirst().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getName() != null)
+        {
+            node.getName().apply(this);
+        }
+        if(node.getInclude() != null)
+        {
+            node.getInclude().apply(this);
+        }
+        outAIncludeStatement(node);
+    }
+
+    public void inARulesetStatement(ARulesetStatement node)
+    {
+        defaultIn(node);
+    }
+
+    public void outARulesetStatement(ARulesetStatement node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseARulesetStatement(ARulesetStatement node)
+    {
+        inARulesetStatement(node);
+        if(node.getBlock() != null)
+        {
+            node.getBlock().apply(this);
+        }
+        if(node.getFirst() != null)
+        {
+            node.getFirst().apply(this);
+        }
+        outARulesetStatement(node);
+    }
+
+    public void inAStatementBlock(AStatementBlock node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAStatementBlock(AStatementBlock node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAStatementBlock(AStatementBlock node)
+    {
+        inAStatementBlock(node);
+        if(node.getRBrace() != null)
+        {
+            node.getRBrace().apply(this);
+        }
+        {
+            List<PStatement> copy = new ArrayList<PStatement>(node.getStatement());
+            Collections.reverse(copy);
+            for(PStatement e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getLBrace() != null)
+        {
+            node.getLBrace().apply(this);
+        }
+        outAStatementBlock(node);
+    }
+
+    public void inACallFunctionCall(ACallFunctionCall node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACallFunctionCall(ACallFunctionCall node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACallFunctionCall(ACallFunctionCall node)
+    {
+        inACallFunctionCall(node);
+        if(node.getRPar() != null)
+        {
+            node.getRPar().apply(this);
+        }
+        {
+            List<PFunctionCall> copy = new ArrayList<PFunctionCall>(node.getSecond());
+            Collections.reverse(copy);
+            for(PFunctionCall e : copy)
+            {
+                e.apply(this);
+            }
+        }
+        if(node.getFirst() != null)
+        {
+            node.getFirst().apply(this);
+        }
+        if(node.getLPar() != null)
+        {
+            node.getLPar().apply(this);
+        }
+        if(node.getName() != null)
+        {
+            node.getName().apply(this);
+        }
+        outACallFunctionCall(node);
+    }
+
+    public void inASimpleFunctionCall(ASimpleFunctionCall node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASimpleFunctionCall(ASimpleFunctionCall node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASimpleFunctionCall(ASimpleFunctionCall node)
+    {
+        inASimpleFunctionCall(node);
+        if(node.getCommaValue() != null)
+        {
+            node.getCommaValue().apply(this);
+        }
+        outASimpleFunctionCall(node);
+    }
+
+    public void inACommaCommaValue(ACommaCommaValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outACommaCommaValue(ACommaCommaValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseACommaCommaValue(ACommaCommaValue node)
+    {
+        inACommaCommaValue(node);
+        if(node.getCommaValue() != null)
+        {
+            node.getCommaValue().apply(this);
         }
         if(node.getComma() != null)
         {
             node.getComma().apply(this);
         }
-        outACommaIdentifier(node);
+        outACommaCommaValue(node);
     }
 
-    public void inAVariable(AVariable node)
+    public void inASimpleCommaValue(ASimpleCommaValue node)
     {
         defaultIn(node);
     }
 
-    public void outAVariable(AVariable node)
+    public void outASimpleCommaValue(ASimpleCommaValue node)
     {
         defaultOut(node);
     }
 
     @Override
-    public void caseAVariable(AVariable node)
+    public void caseASimpleCommaValue(ASimpleCommaValue node)
     {
-        inAVariable(node);
-        if(node.getIdentifier() != null)
+        inASimpleCommaValue(node);
+        if(node.getVariable() != null)
         {
-            node.getIdentifier().apply(this);
+            node.getVariable().apply(this);
+        }
+        outASimpleCommaValue(node);
+    }
+
+    public void inADollarVariable(ADollarVariable node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADollarVariable(ADollarVariable node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADollarVariable(ADollarVariable node)
+    {
+        inADollarVariable(node);
+        if(node.getVariable() != null)
+        {
+            node.getVariable().apply(this);
         }
         if(node.getDollar() != null)
         {
             node.getDollar().apply(this);
         }
-        outAVariable(node);
+        outADollarVariable(node);
+    }
+
+    public void inADotVariable(ADotVariable node)
+    {
+        defaultIn(node);
+    }
+
+    public void outADotVariable(ADotVariable node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseADotVariable(ADotVariable node)
+    {
+        inADotVariable(node);
+        if(node.getVariable() != null)
+        {
+            node.getVariable().apply(this);
+        }
+        if(node.getDot() != null)
+        {
+            node.getDot().apply(this);
+        }
+        outADotVariable(node);
+    }
+
+    public void inASimpleVariable(ASimpleVariable node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASimpleVariable(ASimpleVariable node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASimpleVariable(ASimpleVariable node)
+    {
+        inASimpleVariable(node);
+        if(node.getUnit() != null)
+        {
+            node.getUnit().apply(this);
+        }
+        outASimpleVariable(node);
+    }
+
+    public void inAPercUnit(APercUnit node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAPercUnit(APercUnit node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAPercUnit(APercUnit node)
+    {
+        inAPercUnit(node);
+        if(node.getMod() != null)
+        {
+            node.getMod().apply(this);
+        }
+        if(node.getUnit() != null)
+        {
+            node.getUnit().apply(this);
+        }
+        outAPercUnit(node);
+    }
+
+    public void inASimpleUnit(ASimpleUnit node)
+    {
+        defaultIn(node);
+    }
+
+    public void outASimpleUnit(ASimpleUnit node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseASimpleUnit(ASimpleUnit node)
+    {
+        inASimpleUnit(node);
+        if(node.getValue() != null)
+        {
+            node.getValue().apply(this);
+        }
+        outASimpleUnit(node);
+    }
+
+    public void inAStringValue(AStringValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAStringValue(AStringValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAStringValue(AStringValue node)
+    {
+        inAStringValue(node);
+        if(node.getIdentifier() != null)
+        {
+            node.getIdentifier().apply(this);
+        }
+        outAStringValue(node);
+    }
+
+    public void inATermValue(ATermValue node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATermValue(ATermValue node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATermValue(ATermValue node)
+    {
+        inATermValue(node);
+        if(node.getTerm() != null)
+        {
+            node.getTerm().apply(this);
+        }
+        outATermValue(node);
+    }
+
+    public void inATrueTerm(ATrueTerm node)
+    {
+        defaultIn(node);
+    }
+
+    public void outATrueTerm(ATrueTerm node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseATrueTerm(ATrueTerm node)
+    {
+        inATrueTerm(node);
+        if(node.getTrue() != null)
+        {
+            node.getTrue().apply(this);
+        }
+        outATrueTerm(node);
+    }
+
+    public void inAColorTerm(AColorTerm node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAColorTerm(AColorTerm node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAColorTerm(AColorTerm node)
+    {
+        inAColorTerm(node);
+        if(node.getColor() != null)
+        {
+            node.getColor().apply(this);
+        }
+        outAColorTerm(node);
+    }
+
+    public void inANumberTerm(ANumberTerm node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANumberTerm(ANumberTerm node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANumberTerm(ANumberTerm node)
+    {
+        inANumberTerm(node);
+        if(node.getIntegerLiteral() != null)
+        {
+            node.getIntegerLiteral().apply(this);
+        }
+        outANumberTerm(node);
+    }
+
+    public void inAFalseTerm(AFalseTerm node)
+    {
+        defaultIn(node);
+    }
+
+    public void outAFalseTerm(AFalseTerm node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseAFalseTerm(AFalseTerm node)
+    {
+        inAFalseTerm(node);
+        if(node.getFalse() != null)
+        {
+            node.getFalse().apply(this);
+        }
+        outAFalseTerm(node);
+    }
+
+    public void inANullTerm(ANullTerm node)
+    {
+        defaultIn(node);
+    }
+
+    public void outANullTerm(ANullTerm node)
+    {
+        defaultOut(node);
+    }
+
+    @Override
+    public void caseANullTerm(ANullTerm node)
+    {
+        inANullTerm(node);
+        if(node.getNull() != null)
+        {
+            node.getNull().apply(this);
+        }
+        outANullTerm(node);
     }
 }

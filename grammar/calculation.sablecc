@@ -15,6 +15,8 @@ Tokens
 
   // prefix
   dollar = '$';
+  hash = '#';
+  dot = '.';
 
   // Separators
 
@@ -49,26 +51,21 @@ Tokens
   mod = '%';
   not = '!';
 
+  // at_operators
+  mixin = '@mixin';
+  include = '@include';
+
   // Keywords
 
-  if = 'if';
-  else = 'else';
-  while = 'while';
-  print = 'print';
-  boolean = 'boolean';
-  string = 'string';
-  integer = 'integer';
   true = 'true';
   false = 'false';
-
-  // Conversions
-
-  b2s = '$b2s'; // boolean to string
-  i2s = '$i2s'; // integer to string
+  null = 'null';
 
   // Identifiers and literals
 
-  identifier = letter (letter | digit | '-' | '_')*;
+  identifier =  (letter | digit | '-' | '_' )*;
+
+  color = '#' (letter | digit)*;
 
   string_literal = '"' string_char* '"';
 
@@ -87,10 +84,40 @@ Productions
     statement*;
 
   statement =
-    {assigment} variable colon identifier comma_identifier* ;
+    {assigment} [first]:comma_value colon [second]:comma_value [rest]:comma_value* semicolon |
+    {mixin} mixin identifier l_par [first]:comma_value [second]:comma_value* r_par block |
+    {include} include [name]:comma_value l_par [first]:function_call [rest]:function_call* r_par semicolon |
+    {ruleset} [first]:comma_value block ;
 
-  comma_identifier =
-    comma identifier ;
+  block =
+    {statement} l_brace statement* r_brace ;
+
+  function_call =
+    {call} [name]:comma_value l_par [first]:function_call [second]:function_call* r_par |
+    {simple} comma_value ;
+
+  comma_value =
+    {comma} comma comma_value |
+    {simple} variable ;
 
   variable =
-    dollar identifier ;
+    {dollar} dollar variable |
+    {dot} dot variable |
+    {simple} unit ;
+
+  unit =
+    {perc} unit mod |
+    {simple} value ;
+
+  value =
+    {string} identifier |
+    {term} term ;
+
+  term =
+    {true} true |
+    {color} color |
+    {number} integer_literal |
+    {false} false |
+    {null} null;
+
+

@@ -8,10 +8,11 @@ import scss.calculation.analysis.*;
 @SuppressWarnings("nls")
 public final class AAssigmentStatement extends PStatement
 {
-    private PVariable _variable_;
+    private PCommaValue _first_;
     private TColon _colon_;
-    private TIdentifier _identifier_;
-    private final LinkedList<PCommaIdentifier> _commaIdentifier_ = new LinkedList<PCommaIdentifier>();
+    private PCommaValue _second_;
+    private final LinkedList<PCommaValue> _rest_ = new LinkedList<PCommaValue>();
+    private TSemicolon _semicolon_;
 
     public AAssigmentStatement()
     {
@@ -19,19 +20,22 @@ public final class AAssigmentStatement extends PStatement
     }
 
     public AAssigmentStatement(
-        @SuppressWarnings("hiding") PVariable _variable_,
+        @SuppressWarnings("hiding") PCommaValue _first_,
         @SuppressWarnings("hiding") TColon _colon_,
-        @SuppressWarnings("hiding") TIdentifier _identifier_,
-        @SuppressWarnings("hiding") List<?> _commaIdentifier_)
+        @SuppressWarnings("hiding") PCommaValue _second_,
+        @SuppressWarnings("hiding") List<?> _rest_,
+        @SuppressWarnings("hiding") TSemicolon _semicolon_)
     {
         // Constructor
-        setVariable(_variable_);
+        setFirst(_first_);
 
         setColon(_colon_);
 
-        setIdentifier(_identifier_);
+        setSecond(_second_);
 
-        setCommaIdentifier(_commaIdentifier_);
+        setRest(_rest_);
+
+        setSemicolon(_semicolon_);
 
     }
 
@@ -39,10 +43,11 @@ public final class AAssigmentStatement extends PStatement
     public Object clone()
     {
         return new AAssigmentStatement(
-            cloneNode(this._variable_),
+            cloneNode(this._first_),
             cloneNode(this._colon_),
-            cloneNode(this._identifier_),
-            cloneList(this._commaIdentifier_));
+            cloneNode(this._second_),
+            cloneList(this._rest_),
+            cloneNode(this._semicolon_));
     }
 
     @Override
@@ -51,16 +56,16 @@ public final class AAssigmentStatement extends PStatement
         ((Analysis) sw).caseAAssigmentStatement(this);
     }
 
-    public PVariable getVariable()
+    public PCommaValue getFirst()
     {
-        return this._variable_;
+        return this._first_;
     }
 
-    public void setVariable(PVariable node)
+    public void setFirst(PCommaValue node)
     {
-        if(this._variable_ != null)
+        if(this._first_ != null)
         {
-            this._variable_.parent(null);
+            this._first_.parent(null);
         }
 
         if(node != null)
@@ -73,7 +78,7 @@ public final class AAssigmentStatement extends PStatement
             node.parent(this);
         }
 
-        this._variable_ = node;
+        this._first_ = node;
     }
 
     public TColon getColon()
@@ -101,16 +106,16 @@ public final class AAssigmentStatement extends PStatement
         this._colon_ = node;
     }
 
-    public TIdentifier getIdentifier()
+    public PCommaValue getSecond()
     {
-        return this._identifier_;
+        return this._second_;
     }
 
-    public void setIdentifier(TIdentifier node)
+    public void setSecond(PCommaValue node)
     {
-        if(this._identifier_ != null)
+        if(this._second_ != null)
         {
-            this._identifier_.parent(null);
+            this._second_.parent(null);
         }
 
         if(node != null)
@@ -123,52 +128,78 @@ public final class AAssigmentStatement extends PStatement
             node.parent(this);
         }
 
-        this._identifier_ = node;
+        this._second_ = node;
     }
 
-    public LinkedList<PCommaIdentifier> getCommaIdentifier()
+    public LinkedList<PCommaValue> getRest()
     {
-        return this._commaIdentifier_;
+        return this._rest_;
     }
 
-    public void setCommaIdentifier(List<?> list)
+    public void setRest(List<?> list)
     {
-        for(PCommaIdentifier e : this._commaIdentifier_)
+        for(PCommaValue e : this._rest_)
         {
             e.parent(null);
         }
-        this._commaIdentifier_.clear();
+        this._rest_.clear();
 
         for(Object obj_e : list)
         {
-            PCommaIdentifier e = (PCommaIdentifier) obj_e;
+            PCommaValue e = (PCommaValue) obj_e;
             if(e.parent() != null)
             {
                 e.parent().removeChild(e);
             }
 
             e.parent(this);
-            this._commaIdentifier_.add(e);
+            this._rest_.add(e);
         }
+    }
+
+    public TSemicolon getSemicolon()
+    {
+        return this._semicolon_;
+    }
+
+    public void setSemicolon(TSemicolon node)
+    {
+        if(this._semicolon_ != null)
+        {
+            this._semicolon_.parent(null);
+        }
+
+        if(node != null)
+        {
+            if(node.parent() != null)
+            {
+                node.parent().removeChild(node);
+            }
+
+            node.parent(this);
+        }
+
+        this._semicolon_ = node;
     }
 
     @Override
     public String toString()
     {
         return ""
-            + toString(this._variable_)
+            + toString(this._first_)
             + toString(this._colon_)
-            + toString(this._identifier_)
-            + toString(this._commaIdentifier_);
+            + toString(this._second_)
+            + toString(this._rest_)
+            + toString(this._semicolon_);
     }
 
     @Override
     void removeChild(@SuppressWarnings("unused") Node child)
     {
         // Remove child
-        if(this._variable_ == child)
+        if(this._first_ == child)
         {
-            this._variable_ = null;
+            this._first_ = null;
             return;
         }
 
@@ -178,14 +209,20 @@ public final class AAssigmentStatement extends PStatement
             return;
         }
 
-        if(this._identifier_ == child)
+        if(this._second_ == child)
         {
-            this._identifier_ = null;
+            this._second_ = null;
             return;
         }
 
-        if(this._commaIdentifier_.remove(child))
+        if(this._rest_.remove(child))
         {
+            return;
+        }
+
+        if(this._semicolon_ == child)
+        {
+            this._semicolon_ = null;
             return;
         }
 
@@ -196,9 +233,9 @@ public final class AAssigmentStatement extends PStatement
     void replaceChild(@SuppressWarnings("unused") Node oldChild, @SuppressWarnings("unused") Node newChild)
     {
         // Replace child
-        if(this._variable_ == oldChild)
+        if(this._first_ == oldChild)
         {
-            setVariable((PVariable) newChild);
+            setFirst((PCommaValue) newChild);
             return;
         }
 
@@ -208,19 +245,19 @@ public final class AAssigmentStatement extends PStatement
             return;
         }
 
-        if(this._identifier_ == oldChild)
+        if(this._second_ == oldChild)
         {
-            setIdentifier((TIdentifier) newChild);
+            setSecond((PCommaValue) newChild);
             return;
         }
 
-        for(ListIterator<PCommaIdentifier> i = this._commaIdentifier_.listIterator(); i.hasNext();)
+        for(ListIterator<PCommaValue> i = this._rest_.listIterator(); i.hasNext();)
         {
             if(i.next() == oldChild)
             {
                 if(newChild != null)
                 {
-                    i.set((PCommaIdentifier) newChild);
+                    i.set((PCommaValue) newChild);
                     newChild.parent(this);
                     oldChild.parent(null);
                     return;
@@ -230,6 +267,12 @@ public final class AAssigmentStatement extends PStatement
                 oldChild.parent(null);
                 return;
             }
+        }
+
+        if(this._semicolon_ == oldChild)
+        {
+            setSemicolon((TSemicolon) newChild);
+            return;
         }
 
         throw new RuntimeException("Not a child.");
